@@ -1,0 +1,42 @@
+POST http://localhost:4004/odata/v4/my-order-approval/approveOrders
+Content-Type: application/json
+
+{
+    "orders": [
+        "2718302015",
+        "2718818233",
+        "2720766857"
+    ],
+    "approveLoad": false,
+    "reasonCode": "RC1"
+}
+
+### V2
+POST http://localhost:4004/odata/v2/my-order-approval/approveOrders
+Content-Type: application/json
+
+{
+    "orders": [
+        "2718302015",
+        "2718818233",
+        "2720766857"
+    ],
+    "approveLoad": true,
+    "reasonCode": "Insufficient Stock"
+}
+
+
+
+### update
+PUT http://localhost:4004/odata/v4/my-order-approval/Orders(orderNumber='2718302015', IsActiveEntity=true)
+Content-Type: application/json
+
+{
+    "approveLoad": true,
+    "reasonCode": "Insufficient many Stock1"          
+}
+###get
+http://localhost:4004/odata/v4/my-order-approval/Orders
+
+###get
+http://localhost:4004/odata/v2/my-order-approval/Orders
