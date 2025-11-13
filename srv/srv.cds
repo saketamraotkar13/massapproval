@@ -4,66 +4,65 @@ service MyOrderApprovalService {
 
     @odata.draft.bypass
     @odata.draft.enabled
-    entity Orders                as projection on mydb.Orders;
+    entity Orders as projection on mydb.Orders;
 
-    entity reasonCodeVH          as projection on mydb.reasonCodeVH;
+    entity reasonCodeVH as projection on mydb.reasonCodeVH;
 
-    action approveOrders(orders: array of String,
-                        @mandatory approveLoad: Boolean,
-                         reasonCode: String,
-                         filters: String) returns String;
-
-    entity ProductVH             as
+    entity ProductVH as
         projection on mydb.Orders {
             key product : String
         }
-        group by
-            product;
+        group by product;
 
-    entity MOT2VH                as
+    entity MOT2VH as
         projection on mydb.Orders {
             key mot2 : String
         }
-        group by
-            mot2;
+        group by mot2;
 
-    entity MOTVH                 as
+    entity MOTVH as
         projection on mydb.Orders {
             key mot : String
         }
-        group by
-            mot;
+        group by mot;
 
-    entity sourceLocationVH      as
+    entity sourceLocationVH as
         projection on mydb.Orders {
             key sourceLocation : String
         }
-        group by
-            sourceLocation;
+        group by sourceLocation;
 
     entity destinationLocationVH as
         projection on mydb.Orders {
             key destinationLocation : String
         }
-        group by
-            destinationLocation;
+        group by destinationLocation;
 
-    entity categoryVH            as
+    entity categoryVH as
         projection on mydb.Orders {
             key category : String
         }
-        group by
-            category;
+        group by category;
 
-    entity OrdersVH              as
+    entity OrdersVH as
         projection on mydb.Orders {
             key orderNumber : String
         }
-        group by
-            orderNumber;
+        group by orderNumber;
 
 }
 
-
-annotate MyOrderApprovalService.Orders with @Capabilities.DeleteRestrictions: {Deletable: false};
-annotate MyOrderApprovalService.Orders with @Capabilities.InsertRestrictions: {Insertable: false};
+// --- Annotations to enable SmartFilterBar filters
+annotate MyOrderApprovalService.Orders with {
+    orderNumber       @UI.selectionField: true @UI.label: 'Order Number';
+    product           @UI.selectionField: true @UI.label: 'Product';
+    category          @UI.selectionField: true @UI.label: 'Category';
+    sourceLocation    @UI.selectionField: true @UI.label: 'Source Location';
+    destinationLocation @UI.selectionField: true @UI.label: 'Destination Location';
+    mot               @UI.selectionField: true @UI.label: 'MOT';
+    mot2              @UI.selectionField: true @UI.label: 'MOT2';
+    reasonCode        @UI.selectionField: true @UI.label: 'Reason Code';
+    approveLoad       @UI.selectionField: true @UI.label: 'Approve Load';
+    startDate         @UI.selectionField: true @UI.label: 'Start Date';
+    endDate           @UI.selectionField: true @UI.label: 'End Date';
+};
