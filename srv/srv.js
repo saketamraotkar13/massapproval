@@ -41,7 +41,7 @@ class MyOrderApprovalService extends cds.ApplicationService {
         }
 
         // Select matching order numbers from DB
-        const rows = await SELECT.from(Orders)
+        const rows = await SELECT.from('strbw.Orders')
           .where(whereConditions)
           .columns(['orderNumber']);
 
@@ -54,12 +54,16 @@ class MyOrderApprovalService extends cds.ApplicationService {
       }
 
       // --- Update orders in DB
-      const updateData = { approveLoad };
-      if (reasonCode) updateData.reasonCode_ID = reasonCode; // adjust flattened association name if needed
-
-      await UPDATE(Orders)
-        .set(updateData)
-        .where({ orderNumber: { in: orders } });
+      if (reasonCode) {
+        await UPDATE('strbw.Orders')
+          .set({ approveLoad, reasonCode })
+          .where({ orderNumber: { in: orders } });
+      }
+      else {
+        await UPDATE('strbw.Orders')
+          .set({ approveLoad })
+          .where({ orderNumber: { in: orders } });
+      }
 
       return { success: true, message: `${orders.length} orders updated successfully.` };
     });

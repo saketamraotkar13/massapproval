@@ -1,100 +1,22 @@
 <mvc:View 
     controllerName="ui5massapproval.controller.View1"
-    xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
-    xmlns:smartTable="sap.ui.comp.smarttable"
-    xmlns:smartfield="sap.ui.comp.smartfield"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-    height="100%">
-
-    <VBox fitContainer="true" id="idVB">
-
-        <!-- Smart Filter Bar -->
-        <smartFilterBar:SmartFilterBar 
-            id="smartFilterBar" 
-            entitySet="Orders" 
-            persistencyKey="SmartFilter_Orders" 
-            basicSearchFieldName="orderNumber" 
-            enableBasicSearch="true"
-            useToolbar="true"
-            showRestoreButton="true">
-
-            <!-- Configure fields with value helps -->
-            <smartFilterBar:controlConfiguration>
-
-                <smartFilterBar:ControlConfiguration key="product" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="ProductVH" />
-
-                <smartFilterBar:ControlConfiguration key="mot" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="MOTVH" />
-
-                <smartFilterBar:ControlConfiguration key="mot2" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="MOT2VH" />
-
-                <smartFilterBar:ControlConfiguration key="sourceLocation" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="sourceLocationVH" />
-
-                <smartFilterBar:ControlConfiguration key="destinationLocation" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="destinationLocationVH" />
-
-                <smartFilterBar:ControlConfiguration key="category" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="categoryVH" />
-
-                <smartFilterBar:ControlConfiguration key="reasonCode" 
-                    smartField="true" 
-                    valueHelpOnly="true" 
-                    valueHelpEntitySet="reasonCodeVH" />
-
-            </smartFilterBar:controlConfiguration>
-
-            <smartFilterBar:layoutData>
-                <FlexItemData shrinkFactor="0"/>
-            </smartFilterBar:layoutData>
-
-        </smartFilterBar:SmartFilterBar>
-
-        <!-- Smart Table -->
-        <smartTable:SmartTable 
-            id="OrdersSmartTable" 
-            entitySet="Orders" 
-            smartFilterId="smartFilterBar" 
-            tableType="Table" 
-            enableExport="true" 
-            beforeExport="onBeforeExport"
-            initiallyVisibleFields="orderNumber,product,category,sourceLocation,destinationLocation,reasonCode"
-            useVariantManagement="true" 
-            useTablePersonalisation="true" 
-            header="Orders" 
-            showRowCount="true" 
-            persistencyKey="SmartTable_Orders" 
-            enableAutoBinding="true" 
-            demandPopin="true" 
-            class="sapUiResponsiveContentPadding" 
-            showDetailsButton="true" 
-            enableAutoColumnWidth="true" 
-            app:useSmartToggle="true">
-
-            <smartTable:layoutData>
-                <FlexItemData growFactor="1" baseSize="0%"/>
-            </smartTable:layoutData>
-
-        </smartTable:SmartTable>
-
-    </VBox>
-
+	xmlns="sap.m"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:smartTable="sap.ui.comp.smarttable" height="100%">
+	<Page id="page" title="Orders">
+		<!-- Smart Filter Bar -->
+		<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="Orders" persistencyKey="SmartFilterBarOrders" useToolbar="true" enableBasicSearch="true" />
+		<!-- Smart Table -->
+		<smartTable:SmartTable id="smartTable" tableType="Table" entitySet="Orders" smartFilterId="smartFilterBar" editTogglable="true" useVariantManagement="true" useTablePersonalisation="true" header="Orders" enableAutoBinding="true" showRowCount="true" initiallyVisibleFields="orderNumber,reasonCode,approveLoad">
+			<!-- Custom toolbar with Approve button -->
+			<smartTable:customToolbar>
+				<Toolbar id="idtb">
+					<Title text="Orders" level="H2" id="idttl" />
+					<ToolbarSpacer id="idTBS"/>
+					<Button text="Approve" type="Emphasized" press=".onApproveSelected" id="idBtnApprv" />
+				</Toolbar>
+			</smartTable:customToolbar>
+		</smartTable:SmartTable>
+	</Page>
 </mvc:View>

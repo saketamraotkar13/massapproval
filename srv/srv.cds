@@ -8,6 +8,14 @@ service MyOrderApprovalService {
 
     entity reasonCodeVH as projection on mydb.reasonCodeVH;
 
+    //custom action to handle bulk approval
+    action approveOrders(
+            orders: array of String,
+            approveLoad: Boolean,
+            reasonCode: String,
+            filters: String  
+        ) returns String;
+
     entity ProductVH as
         projection on mydb.Orders {
             key product : String
